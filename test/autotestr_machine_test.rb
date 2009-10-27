@@ -3,6 +3,7 @@ require 'test_helper'
 class MachineTest < Given::TestCase
   Given :a_new_machine do
     Then { expect(@machine.state) == "unknown" }
+    Then { expect(@machine.files_to_test.sort) == Dir["test/**/*_test.rb"].sort }
 
     When { @machine.success }
     Then { expect(@machine.state) == "green" }

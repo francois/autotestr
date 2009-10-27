@@ -21,6 +21,12 @@ module Autotestr
 
       after_transition :to => :tainted, :do => :log_changed_file
 
+      state :unknown do
+        def files_to_test
+          Dir["test/**/*_test.rb"]
+        end
+      end
+
       state :tainted do
         attr_reader :files_to_test
       end

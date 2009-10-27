@@ -50,6 +50,8 @@ module Autotestr
       file_changed
     end
 
+    private
+
     def log_changed_file
       files_to_test << changed_file
       self.changed_file = nil

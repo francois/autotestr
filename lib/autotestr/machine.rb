@@ -6,13 +6,11 @@ module Autotestr
 
     state_machine :initial => :unknown do
       event :success do
-        transition :unknown => :green
-        transition :red => :green
+        transition :running => :green
       end
 
       event :failed do
-        transition :unknown => :red
-        transition :green => :red
+        transition :running => :red
       end
 
       event :file_changed do

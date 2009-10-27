@@ -6,6 +6,10 @@ module Autotestr
       event :success do
         transition :unknown => :green
       end
+
+      event :failed do
+        transition :unknown => :red
+      end
     end
   end
 end

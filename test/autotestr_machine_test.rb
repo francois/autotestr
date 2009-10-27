@@ -6,6 +6,9 @@ class MachineTest < Given::TestCase
 
     When { @machine.success }
     Then { @machine.state == "green" }
+
+    When { @machine.failed }
+    Then { @machine.state == "red" }
   end
 
   protected

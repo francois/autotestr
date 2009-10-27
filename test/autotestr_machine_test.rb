@@ -42,10 +42,21 @@ class MachineTest < Given::TestCase
     Then { expect(@machine.files_to_test) == ["test/models/machine_test.rb", "app/models/machine.rb"] }
   end
 
+  Given :a_green_machine do
+    When do
+      @machine.changed!("test/models/machine_test.rb")
+      @machine.run
+    end
+
+    Then { expect(@test_files) == ["test/models/machine_test.rb"] }
+  end
+
   protected
 
   def a_new_machine
-    @machine = Autotestr::Machine.new
+    @machine = Autotestr::Machine.new do |files|
+      @test_files = files.dup
+    end
   end
 
   def a_red_machine

@@ -19,7 +19,12 @@ module Autotestr
         transition any => :tainted
       end
 
-      after_transition :to => :tainted, :do => :log_changed_file
+      event :run do
+        transition [:unknown, :tainted] => :running
+      end
+
+      after_transition  :to => :tainted, :do => :log_changed_file
+      before_transition :to => :running, :do => :launch_runner
 
       state :unknown do
         def files_to_test
@@ -32,9 +37,10 @@ module Autotestr
       end
     end
 
-    def initialize
+    def initialize(&run_block)
       super
       @files_to_test = []
+      @run_block = run_block
     end
 
     def changed!(file)
@@ -45,6 +51,10 @@ module Autotestr
     def log_changed_file
       files_to_test << changed_file
       self.changed_file = nil
+    end
+
+    def launch_runner
+      @run_block.call(files_to_test)
     end
   end
 end

@@ -24,6 +24,9 @@ class MachineTest < Given::TestCase
     Then { expect(@machine.changed_file.nil?) }
     Then { expect(@machine.files_to_test.length) == 2 }
     Then { expect(@machine.files_to_test) == ["test/models/machine_test.rb", "app/models/machine.rb"] }
+
+    When { @machine.reset }
+    Then { expect(@machine.unknown?) }
   end
 
   Given :a_green_machine do
@@ -39,6 +42,9 @@ class MachineTest < Given::TestCase
 
     When { @machine.success! }
     FailsWith(StateMachine::InvalidTransition)
+
+    When { @machine.reset }
+    Then { expect(@machine.unknown?) }
   end
 
   Given :a_running_machine do
@@ -50,6 +56,14 @@ class MachineTest < Given::TestCase
 
     When { @machine.run! }
     FailsWith(StateMachine::InvalidTransition)
+
+    When { @machine.reset }
+    Then { expect(@machine.unknown?) }
+  end
+
+  Given :a_red_machine do
+    When { @machine.reset }
+    Then { expect(@machine.unknown?) }
   end
 
   protected

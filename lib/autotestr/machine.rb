@@ -21,6 +21,10 @@ module Autotestr
         transition [:unknown, :tainted] => :running
       end
 
+      event :reset do
+        transition any => :unknown
+      end
+
       after_transition  :to => :tainted, :do => :log_changed_file
       before_transition :to => :running, :do => :launch_runner
 

@@ -2,27 +2,34 @@ require 'test_helper'
 
 class MachineTest < Given::TestCase
   Given :a_new_machine do
-    Then { @machine.state == "unknown" }
+    Then { expect(@machine.state) == "unknown" }
 
     When { @machine.success }
-    Then { @machine.state == "green" }
+    Then { expect(@machine.state) == "green" }
 
     When { @machine.failed }
-    Then { @machine.state == "red" }
+    Then { expect(@machine.state) == "red" }
   end
 
   Given :a_red_machine do
     Then { @machine.red? }
 
     When { @machine.success }
-    Then { @machine.green? }
+    Then { expect(@machine.green?) }
   end
 
   Given :a_green_machine do
-    Then { @machine.green? }
+    Then { expect(@machine.green?) }
 
     When { @machine.failed }
-    Then { @machine.red? }
+    Then { expect(@machine.red?) }
+  end
+
+  Given :a_green_machine do
+    When { @machine.changed!("test/models/machine_test.rb") }
+    Then { expect(@machine.tainted?) }
+    Then { expect(@machine.changed_file.nil?) }
+    Then { expect(@machine.files_to_test) == ["test/models/machine_test.rb"] }
   end
 
   protected

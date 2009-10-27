@@ -21,6 +21,9 @@ end
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
+  FileList["vendor/*/lib"].each do |path|
+    test.libs << path
+  end
   test.pattern = 'test/**/*_test.rb'
   test.verbose = true
 end

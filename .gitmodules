@@ -1,0 +1,3 @@
+[submodule "vendor/given"]
+	path = vendor/given
+	url = git://github.com/jimweirich/Given.git

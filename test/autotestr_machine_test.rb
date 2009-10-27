@@ -29,6 +29,12 @@ class MachineTest < Given::TestCase
     end
 
     Then { expect(@test_files) == ["test/models/machine_test.rb"] }
+
+    When { @machine.failed! }
+    FailsWith(StateMachine::InvalidTransition)
+
+    When { @machine.success! }
+    FailsWith(StateMachine::InvalidTransition)
   end
 
   Given :a_running_machine do
@@ -37,6 +43,9 @@ class MachineTest < Given::TestCase
 
     When { @machine.failed! }
     Then { expect(@machine.red?) }
+
+    When { @machine.run! }
+    FailsWith(StateMachine::InvalidTransition)
   end
 
   protected

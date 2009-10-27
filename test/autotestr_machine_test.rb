@@ -30,6 +30,15 @@ class MachineTest < Given::TestCase
     Then { expect(@machine.tainted?) }
     Then { expect(@machine.changed_file.nil?) }
     Then { expect(@machine.files_to_test) == ["test/models/machine_test.rb"] }
+
+    When do
+      @machine.changed!("test/models/machine_test.rb")
+      @machine.changed!("app/models/machine.rb")
+    end
+    Then { expect(@machine.tainted?) }
+    Then { expect(@machine.changed_file.nil?) }
+    Then { expect(@machine.files_to_test.length) == 2 }
+    Then { expect(@machine.files_to_test) == ["test/models/machine_test.rb", "app/models/machine.rb"] }
   end
 
   protected

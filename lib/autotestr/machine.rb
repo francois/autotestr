@@ -15,31 +15,25 @@ module Autotestr
         transition :green => :red
       end
 
-      event :test_changed do
+      event :file_changed do
         transition any => :tainted
       end
 
-      before_transition :to => :tainted, :do => :reset_files_to_test
-      after_transition  :to => :tainted, :do => :log_changed_file
+      after_transition :to => :tainted, :do => :log_changed_file
 
       state :tainted do
         attr_reader :files_to_test
       end
     end
 
-    def changed!(file)
-      self.changed_file = file
-
-      case file
-      when /test/
-        test_changed
-      else
-        raise ArgumentError, "Don't know how to handle changed file #{file.inspect}"
-      end
+    def initialize
+      super
+      @files_to_test = []
     end
 
-    def reset_files_to_test
-      @files_to_test = []
+    def changed!(file)
+      self.changed_file = file
+      file_changed
     end
 
     def log_changed_file

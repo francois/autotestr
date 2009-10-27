@@ -11,6 +11,7 @@ begin
     gem.homepage = "http://github.com/francois/autotestr"
     gem.authors = ["François Beausoleil"]
     gem.add_development_dependency "yard"
+    gem.add_development_dependency "mocha"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
 
     gem.add_dependency "pluginaweek-state_machine", "~> 0.8"

@@ -1,6 +1,6 @@
 h1. autotestr
 
-<p><img src="blob/master/doc/state-diagram.png" alt="A state diagram explaining how the machine behaves." longdesc="..."/></p>
+<p><img src="http://github.com/francois/autotestr/raw/master/doc/state-diagram.png" alt="A state diagram explaining how the machine behaves." longdesc="..."/></p>
 
 h2. Note on Patches/Pull Requests
  
